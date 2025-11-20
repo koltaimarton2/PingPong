@@ -1,0 +1,182 @@
+﻿[
+  {
+    "Name": "Wang Chuqin",
+    "Rank": 1,
+    "SkillPoints": 100,
+    "Description": "Chinese prodigy and current world #1 in men’s singles."
+  },
+  {
+    "Name": "Lin Shidong",
+    "Rank": 2,
+    "SkillPoints": 68,
+    "Description": "Rising Chinese star ranked second in the world."
+  },
+  {
+    "Name": "Hugo Calderano",
+    "Rank": 3,
+    "SkillPoints": 55,
+    "Description": "Top Brazilian player, consistent in world tour events."
+  },
+  {
+    "Name": "Tomokazu Harimoto",
+    "Rank": 4,
+    "SkillPoints": 50,
+    "Description": "Japanese veteran with aggressive playing style."
+  },
+  {
+    "Name": "Truls Möregårdh",
+    "Rank": 5,
+    "SkillPoints": 47,
+    "Description": "Swedish talent known for his fast game."
+  },
+  {
+    "Name": "Liang Jingkun",
+    "Rank": 6,
+    "SkillPoints": 34,
+    "Description": "Chinese player with strong forehand attacks."
+  },
+  {
+    "Name": "Félix Lebrun",
+    "Rank": 7,
+    "SkillPoints": 33,
+    "Description": "Young French penholder making waves in the top 10."
+  },
+  {
+    "Name": "Sora Matsushima",
+    "Rank": 8,
+    "SkillPoints": 28,
+    "Description": "Japanese rising star, high potential in international play."
+  },
+  {
+    "Name": "Qiu Dang",
+    "Rank": 9,
+    "SkillPoints": 26,
+    "Description": "German‑Chinese player known for strong defense."
+  },
+  {
+    "Name": "Benedikt Duda",
+    "Rank": 10,
+    "SkillPoints": 23,
+    "Description": "German left‑handed player with great consistency."
+  },
+  {
+    "Name": "Darko Jorgić",
+    "Rank": 11,
+    "SkillPoints": 22,
+    "Description": "Slovenian player with powerful topspin shots."
+  },
+  {
+    "Name": "Xiang Peng",
+    "Rank": 12,
+    "SkillPoints": 21,
+    "Description": "Emerging Chinese talent."
+  },
+  {
+    "Name": "Alexis Lebrun",
+    "Rank": 13,
+    "SkillPoints": 20,
+    "Description": "French player and older brother of Félix Lebrun."
+  },
+  {
+    "Name": "Lin Yun‑ju",
+    "Rank": 14,
+    "SkillPoints": 20,
+    "Description": "Taiwanese player known for his chop and touch play."
+  },
+  {
+    "Name": "An Jae‑hyun",
+    "Rank": 15,
+    "SkillPoints": 17,
+    "Description": "South Korean player with a balanced style."
+  },
+  {
+    "Name": "Jang Woo‑jin",
+    "Rank": 16,
+    "SkillPoints": 16,
+    "Description": "Veteran South Korean with strong forehand."
+  },
+  {
+    "Name": "Anders Lind",
+    "Rank": 17,
+    "SkillPoints": 16,
+    "Description": "Danish player climbing the rankings."
+  },
+  {
+    "Name": "Simon Gauzy",
+    "Rank": 18,
+    "SkillPoints": 16,
+    "Description": "French professional with a smooth two-winged game."
+  },
+  {
+    "Name": "Lee Sang Su",
+    "Rank": 19,
+    "SkillPoints": 14,
+    "Description": "Experienced South Korean, very tactical."
+  },
+  {
+    "Name": "Shunsuke Togami",
+    "Rank": 20,
+    "SkillPoints": 14,
+    "Description": "Japanese contender with fast attacking play."
+  },
+  {
+    "Name": "Patrick Franziska",
+    "Rank": 21,
+    "SkillPoints": 14,
+    "Description": "German star known for his all‑round game."
+  },
+  {
+    "Name": "Kanak Jha",
+    "Rank": 22,
+    "SkillPoints": 13,
+    "Description": "Top American player, agile attacker."
+  },
+  {
+    "Name": "OH Junsung",
+    "Rank": 23,
+    "SkillPoints": 13,
+    "Description": "South Korean with strong spin variation."
+  },
+  {
+    "Name": "Chen Yuanyu",
+    "Rank": 24,
+    "SkillPoints": 12,
+    "Description": "Chinese upcoming player."
+  },
+  {
+    "Name": "Jonathan Groth",
+    "Rank": 25,
+    "SkillPoints": 10,
+    "Description": "Danish veteran and tough competitor."
+  },
+  {
+    "Name": "Uda Yukiya",
+    "Rank": 26,
+    "SkillPoints": 10,
+    "Description": "Japanese player with solid technique."
+  },
+  {
+    "Name": "Quadri Aruna",
+    "Rank": 27,
+    "SkillPoints": 10,
+    "Description": "Nigerian star, powerful forehand hitter."
+  },
+  {
+    "Name": "Hiroto Shinozuka",
+    "Rank": 28,
+    "SkillPoints": 10,
+    "Description": "Young Japanese player, aggressive style."
+  },
+  {
+    "Name": "Dimitrij Ovtcharov",
+    "Rank": 29,
+    "SkillPoints": 10,
+    "Description": "Veteran German champion with big-match experience."
+  },
+  {
+    "Name": "Anton Kallberg",
+    "Rank": 30,
+    "SkillPoints": 9,
+    "Description": "Swedish professional with a steady and tactical game."
+  }
+]
