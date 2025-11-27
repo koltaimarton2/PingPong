@@ -25,30 +25,60 @@
                     <RowDefinition Height="auto"></RowDefinition>
                 </Grid.RowDefinitions>
                 <Label Grid.Row="0" Content="Játékosok" HorizontalAlignment="Center" FontWeight="Bold" Margin="5 5 5 5"></Label>
-                <Button x:Name="ListPlayers" Grid.Row="1" Height="30" Grid.RowSpan="1" VerticalAlignment="Top" Margin="5 5 5 5" >Kilistázás</Button>
-                <Button x:Name="AddPlayers" Grid.Row="2" Height="30" Grid.RowSpan="1" VerticalAlignment="Top" Margin="5 5 5 5" >Felvétel</Button>
-                <Button x:Name="EditPlayers" Grid.Row="3" Height="30" Grid.RowSpan="1" VerticalAlignment="Top" Margin="5 5 5 5" >Szerkesztés</Button>
-                <Button x:Name="DeletePlayers" Grid.Row="4" Height="30" Grid.RowSpan="1" VerticalAlignment="Top" Margin="5 5 5 5" >Törlés</Button>
+                <Button x:Name="ListPlayers" Grid.Row="1" Height="30" Background="LightBlue" BorderBrush="DarkSlateGray" BorderThickness="2" MaxWidth="300" Margin="5 5 5 5" >Kilistázás</Button>
+                <Button x:Name="AddPlayers" Grid.Row="2" Height="30" Background="LightBlue" BorderBrush="DarkSlateGray" BorderThickness="2" MaxWidth="300" Margin="5 5 5 5" >Felvétel</Button>
+                <Button x:Name="EditPlayers" Grid.Row="3" Height="30" Background="LightBlue" BorderBrush="DarkSlateGray" BorderThickness="2" MaxWidth="300" Margin="5 5 5 5" >Szerkesztés</Button>
+                <Button x:Name="DeletePlayers" Grid.Row="4" Height="30" Background="LightBlue" BorderBrush="DarkSlateGray" BorderThickness="2" MaxWidth="300" Margin="5 5 5 5" >Törlés</Button>
                 <Label Grid.Row="5" Content="Meccsek" HorizontalAlignment="Center" FontWeight="Bold" Margin="5 5 5 5"></Label>
-                <Button x:Name="AddMatch" Grid.Row="6" Height="30" Grid.RowSpan="1" VerticalAlignment="Top" Margin="5 5 5 5" >Tervezés</Button>
-                <Button x:Name="PlayMatch" Grid.Row="7" Height="30" Grid.RowSpan="1" VerticalAlignment="Top" Margin="5 5 5 5" >Lejátszás</Button>
+                <Button x:Name="AddMatch" Grid.Row="6" Height="30" Background="LightBlue" BorderBrush="DarkSlateGray" BorderThickness="2" MaxWidth="300" Margin="5 5 5 5" >Tervezés</Button>
             </Grid>
         </Border>
-        <Button Grid.Row="1" Height="30" Grid.RowSpan="1" VerticalAlignment="Top"> </Button>
-    <Border x:Name="Display" Grid.Column="1" Grid.Row="0" BorderBrush="DarkSlateGray" BorderThickness="3" Margin="5 50 5 5" >
-        <Grid>
+        <Button Grid.Row="1" Height="30"  VerticalAlignment="Top"> </Button>
+        <Border x:Name="Display" Grid.Column="1" Grid.Row="0" BorderBrush="DarkSlateGray" BorderThickness="3" Margin="5 50 5 5" >
+            <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="auto"></RowDefinition>
-                    <RowDefinition Height="auto"></RowDefinition>
                     <RowDefinition Height="auto"></RowDefinition>
                     <RowDefinition Height="auto"></RowDefinition>
                     <RowDefinition Height="auto"></RowDefinition>
                 </Grid.RowDefinitions>
                 <Label x:Name="DisplayTitle" Grid.Row="0" FontWeight="Bold" HorizontalAlignment="Center">Placeholder</Label>
-                <ListBox x:Name="lbList" Grid.Row="1" MinHeight="100" Margin="5 5 5 5"/>
-                
-            
-        </Grid>
+                <Grid  x:Name="gridList" Visibility="Hidden" Grid.Row="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                       
+                    </Grid.RowDefinitions>
+                    <ListBox x:Name="lbList" Background="CadetBlue" BorderBrush="DarkSlateGray" Grid.Row="0" Height="330"   ScrollViewer.CanContentScroll="True" Margin="5 5 5 5"/>
+
+                </Grid>
+                <Grid x:Name="gridAdd" Visibility="Visible" Grid.Row="1" HorizontalAlignment="Center">
+                    <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <StackPanel Grid.Row="0" Margin="10 10 10 10">
+                        <StackPanel Orientation="Horizontal" Margin="0 5 0 5">
+                            <Label Content="Név:" Width="100" VerticalAlignment="Center"/>
+                            <TextBox x:Name="tbName" Width="200"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0 5 0 5">
+                            <Label Content="Rank:" Width="100" VerticalAlignment="Center"/>
+                            <TextBox x:Name="tbRank" Width="200"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0 5 0 5" >
+                            <Label Content="Értékelés:" Width="100" VerticalAlignment="Center"/>
+                            <TextBox x:Name="tbSkill" Width="200"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0 5 0 5" >
+                            <Label Content="Leírás:" Width="100" VerticalAlignment="Center"/>
+                            <TextBox x:Name="tbDesc" Width="200"/>
+                        </StackPanel>
+
+                        <Button x:Name="btnSubmit" Content="Hozzáadás" Width="150" Margin="0 10 0 0" HorizontalAlignment="Center" Background="LightBlue" BorderBrush="DarkSlateGray" BorderThickness="2"/>
+                        
+                    </StackPanel>
+                </Grid>
+
+
+            </Grid>
     </Border>
 
     </Grid>
