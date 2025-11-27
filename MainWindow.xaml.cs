@@ -14,9 +14,6 @@ using Newtonsoft.Json;
 
 namespace PingPong
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         public List<Player> players = new List<Player>();
@@ -26,16 +23,88 @@ namespace PingPong
             ReadJSON("Datas.json");
 
             ListPlayers.Click += DisplayPlayers;
+            AddPlayers.Click += DisplayAddPlayer;
+            btnSubmit.Click += AddPlayer;
             
         }
 
         public void DisplayPlayers(object sender, RoutedEventArgs e)
         {
-            DisplayTitle.Content = "Játékosok sorrendje";
+            gridAdd.Visibility = Visibility.Hidden;
+            gridList.Visibility = Visibility.Visible;
+            lbList.Items.Clear();
 
+            players.Sort((a, b) => a.Rank.CompareTo(b.Rank));
+            DisplayTitle.Content = "Játékosok sorrendje";
+            
             foreach (var p in players)
             {
                 lbList.Items.Add(p.Rank + ": " + p.Name);
+            }
+        }
+
+        void DisplayAddPlayer(object sender, RoutedEventArgs e)
+        {
+            gridAdd.Visibility = Visibility.Visible;
+            gridList.Visibility = Visibility.Hidden;
+
+            DisplayTitle.Content = "Játékos felvétele";
+        }
+
+        public void AddPlayer(object sender, RoutedEventArgs e)
+        {
+
+            string errorMessage = "";
+
+            if (tbName.Text.Length == 0) 
+            {
+                    errorMessage += "Adjon meg nevet! ";
+            }
+            if (int.Parse(tbSkill.Text) > 100 || int.Parse(tbSkill.Text) < 0)
+            {
+                errorMessage += "Érvénytelen értékelés!";
+            }
+            if(errorMessage == "")
+            {
+                Player player = new Player();
+                player.Name = tbName.Text;
+                player.Rank = int.Parse(tbRank.Text);
+                player.SkillPoints = int.Parse(tbSkill.Text);
+                player.Description = tbDesc.Text;
+
+                bool changeNeeded = false;
+
+                foreach(var p in players)
+                {
+                    if(p.Rank == player.Rank)
+                    {
+                        changeNeeded = true;
+                        break;
+                    }
+                }
+
+                if (changeNeeded)
+                {
+                    foreach (var p in players)
+                    {
+                        if(p.Rank >= player.Rank)
+                        {
+                            p.Rank++;
+                        }
+                    }
+                }
+
+                players.Add(player);
+
+                //lbErrorMessage.Content = "Sikeres játékosfelvétel!";
+                tbName.Text = "";
+                tbRank.Text = "";
+                tbSkill.Text = "";
+                tbDesc.Text = "";
+            }
+            else
+            {
+                //lblErrorMessage.Content = errorMessage;
             }
         }
 
