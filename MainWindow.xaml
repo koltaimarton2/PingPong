@@ -25,18 +25,30 @@
                     <RowDefinition Height="auto"></RowDefinition>
                 </Grid.RowDefinitions>
                 <Label Grid.Row="0" Content="Játékosok" HorizontalAlignment="Center" FontWeight="Bold" Margin="5 5 5 5"></Label>
-                <Button Grid.Row="1" Height="30" Grid.RowSpan="1" VerticalAlignment="Top" Margin="5 5 5 5" >Kilistázás</Button>
-                <Button Grid.Row="2" Height="30" Grid.RowSpan="1" VerticalAlignment="Top" Margin="5 5 5 5" >Felvétel</Button>
-                <Button Grid.Row="3" Height="30" Grid.RowSpan="1" VerticalAlignment="Top" Margin="5 5 5 5" >Szerkesztés</Button>
-                <Button Grid.Row="4" Height="30" Grid.RowSpan="1" VerticalAlignment="Top" Margin="5 5 5 5" >Törlés</Button>
+                <Button x:Name="ListPlayers" Grid.Row="1" Height="30" Grid.RowSpan="1" VerticalAlignment="Top" Margin="5 5 5 5" >Kilistázás</Button>
+                <Button x:Name="AddPlayers" Grid.Row="2" Height="30" Grid.RowSpan="1" VerticalAlignment="Top" Margin="5 5 5 5" >Felvétel</Button>
+                <Button x:Name="EditPlayers" Grid.Row="3" Height="30" Grid.RowSpan="1" VerticalAlignment="Top" Margin="5 5 5 5" >Szerkesztés</Button>
+                <Button x:Name="DeletePlayers" Grid.Row="4" Height="30" Grid.RowSpan="1" VerticalAlignment="Top" Margin="5 5 5 5" >Törlés</Button>
                 <Label Grid.Row="5" Content="Meccsek" HorizontalAlignment="Center" FontWeight="Bold" Margin="5 5 5 5"></Label>
-                
+                <Button x:Name="AddMatch" Grid.Row="6" Height="30" Grid.RowSpan="1" VerticalAlignment="Top" Margin="5 5 5 5" >Tervezés</Button>
+                <Button x:Name="PlayMatch" Grid.Row="7" Height="30" Grid.RowSpan="1" VerticalAlignment="Top" Margin="5 5 5 5" >Lejátszás</Button>
             </Grid>
-
         </Border>
         <Button Grid.Row="1" Height="30" Grid.RowSpan="1" VerticalAlignment="Top"> </Button>
     <Border x:Name="Display" Grid.Column="1" Grid.Row="0" BorderBrush="DarkSlateGray" BorderThickness="3" Margin="5 50 5 5" >
-
+        <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"></RowDefinition>
+                    <RowDefinition Height="auto"></RowDefinition>
+                    <RowDefinition Height="auto"></RowDefinition>
+                    <RowDefinition Height="auto"></RowDefinition>
+                    <RowDefinition Height="auto"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Label x:Name="DisplayTitle" Grid.Row="0" FontWeight="Bold" HorizontalAlignment="Center">Placeholder</Label>
+                <ListBox x:Name="lbList" Grid.Row="1" MinHeight="100" Margin="5 5 5 5"/>
+                
+            
+        </Grid>
     </Border>
 
     </Grid>
