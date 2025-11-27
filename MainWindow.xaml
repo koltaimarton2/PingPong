@@ -19,14 +19,23 @@
                     <RowDefinition Height="auto"></RowDefinition>
                     <RowDefinition Height="auto"></RowDefinition>
                     <RowDefinition Height="auto"></RowDefinition>
+                    <RowDefinition Height="auto"></RowDefinition>
+                    <RowDefinition Height="auto"></RowDefinition>
+                    <RowDefinition Height="auto"></RowDefinition>
+                    <RowDefinition Height="auto"></RowDefinition>
                 </Grid.RowDefinitions>
                 <Label Grid.Row="0" Content="Játékosok" HorizontalAlignment="Center" FontWeight="Bold" Margin="5 5 5 5"></Label>
-                <Button Grid.Row="1" Height="30" Grid.RowSpan="1" VerticalAlignment="Top" Margin="5 5 5 5" >Játékosok kilistázása</Button>
+                <Button Grid.Row="1" Height="30" Grid.RowSpan="1" VerticalAlignment="Top" Margin="5 5 5 5" >Kilistázás</Button>
+                <Button Grid.Row="2" Height="30" Grid.RowSpan="1" VerticalAlignment="Top" Margin="5 5 5 5" >Felvétel</Button>
+                <Button Grid.Row="3" Height="30" Grid.RowSpan="1" VerticalAlignment="Top" Margin="5 5 5 5" >Szerkesztés</Button>
+                <Button Grid.Row="4" Height="30" Grid.RowSpan="1" VerticalAlignment="Top" Margin="5 5 5 5" >Törlés</Button>
+                <Label Grid.Row="5" Content="Meccsek" HorizontalAlignment="Center" FontWeight="Bold" Margin="5 5 5 5"></Label>
+                
             </Grid>
 
         </Border>
         <Button Grid.Row="1" Height="30" Grid.RowSpan="1" VerticalAlignment="Top"> </Button>
-    <Border Name="Display" Grid.Column="1" Grid.Row="0" BorderBrush="DarkSlateGray" BorderThickness="3" Margin="5 50 5 5" >
+    <Border x:Name="Display" Grid.Column="1" Grid.Row="0" BorderBrush="DarkSlateGray" BorderThickness="3" Margin="5 50 5 5" >
 
     </Border>
 
