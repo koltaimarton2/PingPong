@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.ComponentModel.DataAnnotations;
+using System.IO;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -24,7 +25,18 @@ namespace PingPong
             InitializeComponent();
             ReadJSON("Datas.json");
 
+            ListPlayers.Click += DisplayPlayers;
             
+        }
+
+        public void DisplayPlayers(object sender, RoutedEventArgs e)
+        {
+            DisplayTitle.Content = "Játékosok sorrendje";
+
+            foreach (var p in players)
+            {
+                lbList.Items.Add(p.Rank + ": " + p.Name);
+            }
         }
 
         public void ReadJSON(string file)
