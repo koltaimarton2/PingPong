@@ -33,7 +33,6 @@
                 <Button x:Name="AddMatch" Grid.Row="6" Height="30" Background="LightBlue" BorderBrush="DarkSlateGray" BorderThickness="2" MaxWidth="300" Margin="5 5 5 5" >Tervezés</Button>
             </Grid>
         </Border>
-        <Button Grid.Row="1" Height="30"  VerticalAlignment="Top"> </Button>
         <Border x:Name="Display" Grid.Column="1" Grid.Row="0" BorderBrush="DarkSlateGray" BorderThickness="3" Margin="5 50 5 5" >
             <Grid>
                 <Grid.RowDefinitions>
@@ -45,12 +44,12 @@
                 <Grid  x:Name="gridList" Visibility="Hidden" Grid.Row="1">
                     <Grid.RowDefinitions>
                         <RowDefinition></RowDefinition>
-                       
+
                     </Grid.RowDefinitions>
                     <ListBox x:Name="lbList" Background="CadetBlue" BorderBrush="DarkSlateGray" Grid.Row="0" Height="330"   ScrollViewer.CanContentScroll="True" Margin="5 5 5 5"/>
 
                 </Grid>
-                <Grid x:Name="gridAdd" Visibility="Visible" Grid.Row="1" HorizontalAlignment="Center">
+                <Grid x:Name="gridAdd" Visibility="Hidden" Grid.Row="1" HorizontalAlignment="Center">
                     <Grid.RowDefinitions>
                         <RowDefinition></RowDefinition>
                     </Grid.RowDefinitions>
@@ -73,13 +72,33 @@
                         </StackPanel>
 
                         <Button x:Name="btnSubmit" Content="Hozzáadás" Width="150" Margin="0 10 0 0" HorizontalAlignment="Center" Background="LightBlue" BorderBrush="DarkSlateGray" BorderThickness="2"/>
-                        
+
                     </StackPanel>
                 </Grid>
+                <Grid x:Name="gridPlan" Visibility="Visible" Grid.Row="1" HorizontalAlignment="Center">
+                    <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
 
+                    </Grid.RowDefinitions>
+                    <ComboBox x:Name="cbPlayer1" Width="200" Margin="0 10 0 10" Grid.Row="0" Height="40" />
+                    <Label Grid.Row="1" Content="VS" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" FontSize="25"/>
+                    <ComboBox x:Name="cbPlayer2" Width="200" Margin="0 10 0 10" Grid.Row="2" Height="40" />
+                    <Label Grid.Row="3" Content="Best Of" HorizontalAlignment="Center" VerticalAlignment="Center"  Margin="0 0 0 10"/>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="4">
+                        <RadioButton x:Name="rbBestOf1" Content="1" GroupName="BestOf" IsChecked="True" HorizontalAlignment="Center" Margin="0 0 0 5"/>
+                        <RadioButton x:Name="rbBestOf3" Content="3" GroupName="BestOf" IsChecked="True" HorizontalAlignment="Center" Margin="0 0 0 5"/>
+                        <RadioButton x:Name="rbBestOf5" Content="5" GroupName="BestOf" HorizontalAlignment="Center" Margin="0 0 0 10"/>
+                    </StackPanel>
+                    <Button x:Name="btnPlanMatch" Content="Meccs tervezése" Width="175" Margin="0 0 0 0" Grid.Row="5" Height="40" HorizontalAlignment="Center" VerticalAlignment="Top" Background="LightBlue" BorderBrush="DarkSlateGray" BorderThickness="2"/>
 
+                </Grid>
             </Grid>
-    </Border>
+        </Border>
 
     </Grid>
 </Window>
