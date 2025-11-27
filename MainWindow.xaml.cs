@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.IO;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -8,6 +9,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Newtonsoft.Json;
 
 namespace PingPong
 {
@@ -16,9 +18,21 @@ namespace PingPong
     /// </summary>
     public partial class MainWindow : Window
     {
+        public List<Player> players = new List<Player>();
         public MainWindow()
         {
             InitializeComponent();
+            ReadJSON("Datas.json");
+
+            
+        }
+
+        public void ReadJSON(string file)
+        {
+            using(StreamReader sr = new StreamReader(file))
+            {
+                players = JsonConvert.DeserializeObject<List<Player>>(sr.ReadToEnd())!;
+            }
         }
     }
 }
