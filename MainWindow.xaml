@@ -11,22 +11,24 @@
             <ColumnDefinition Width="3*" />
             <ColumnDefinition Width="5*" />
         </Grid.ColumnDefinitions>
-        <Grid Grid.Column="0">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="auto" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
-        </Grid>
         <Label FontSize="25" FontWeight="Bold" FontFamily="Arial" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0" Margin="6 2 6 0" VerticalAlignment="Top"  Background="CadetBlue" BorderBrush="DarkSlateGray" BorderThickness="3">Asztalitenisz ranglista</Label>
         <Border Grid.Column="0" Grid.Row="1" Grid.RowSpan="4" Background="CadetBlue" BorderBrush="DarkSlateGray" BorderThickness="3" Margin="5 50 0 5">
-            <Label  Content="Játékosok" FontSize="24" Grid.Row="3" FontWeight="Bold" HorizontalAlignment="Center"/>
-        </Border>
-        <Border Grid.Column="1" Grid.Row="0" BorderBrush="DarkSlateGray" BorderThickness="3" Margin="5 50 5 5" >
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"></RowDefinition>
+                    <RowDefinition Height="auto"></RowDefinition>
+                    <RowDefinition Height="auto"></RowDefinition>
+                    <RowDefinition Height="auto"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Label Grid.Row="0" Content="Játékosok" HorizontalAlignment="Center" FontWeight="Bold" Margin="5 5 5 5"></Label>
+                <Button Grid.Row="1" Height="30" Grid.RowSpan="1" VerticalAlignment="Top" Margin="5 5 5 5" >Játékosok kilistázása</Button>
+            </Grid>
 
         </Border>
+        <Button Grid.Row="1" Height="30" Grid.RowSpan="1" VerticalAlignment="Top"> </Button>
+    <Border Name="Display" Grid.Column="1" Grid.Row="0" BorderBrush="DarkSlateGray" BorderThickness="3" Margin="5 50 5 5" >
+
+    </Border>
+
     </Grid>
-
 </Window>
