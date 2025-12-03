@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Text;
+using System.Text.Json;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -10,6 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Xml.Linq;
 using Newtonsoft.Json;
 
 namespace PingPong
@@ -26,7 +28,6 @@ namespace PingPong
             AddPlayers.Click += DisplayAddPlayer;
             EditPlayers.Click += DisplayChangePlayer;
             DeletePlayers.Click += DisplayDeletePlayer;
-
 
         }
 
@@ -106,6 +107,9 @@ namespace PingPong
                 }
 
                 players.Add(player);
+
+                UpdateJSON("Datas.json");
+                ReadJSON("Datas.json");
 
                 //lbErrorMessage.Content = "Sikeres játékosfelvétel!";
             }
@@ -212,6 +216,9 @@ namespace PingPong
                 }
 
                 players.Add(player);
+
+                UpdateJSON("Datas.json");
+                ReadJSON("Datas.json");
             }
             else
             {
@@ -272,6 +279,9 @@ namespace PingPong
                 }
 
                 players.Remove(player);
+
+                UpdateJSON("Datas.json");
+                ReadJSON("Datas.json");
             }
             else
             {
@@ -289,6 +299,28 @@ namespace PingPong
             {
                 players = JsonConvert.DeserializeObject<List<Player>>(sr.ReadToEnd())!;
             }
+        }
+
+        public void UpdateJSON(string file)
+        {
+            var newJson = new StringBuilder();
+            newJson.AppendLine("[");
+
+            for (int i = 0; i < players.Count; i++)
+            {
+                var p = players[i];
+
+                newJson.AppendLine($@"  {{
+                            ""Name"": ""{p.Name}"",
+                            ""Rank"": {p.Rank},
+                            ""SkillPoints"": {p.SkillPoints},
+                            ""Description"": ""{p.Description}""
+                          }}{(i < players.Count - 1 ? "," : "")}");
+            }
+
+            newJson.AppendLine("]");
+
+            File.WriteAllText(file, newJson.ToString(), new UTF8Encoding(false));
         }
     }
 }
