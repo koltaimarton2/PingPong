@@ -24,19 +24,22 @@ namespace PingPong
 
             ListPlayers.Click += DisplayPlayers;
             AddPlayers.Click += DisplayAddPlayer;
-            btnSubmit.Click += AddPlayer;
-            
+            EditPlayers.Click += DisplayChangePlayer;
+            DeletePlayers.Click += DisplayDeletePlayer;
+
+
         }
 
         public void DisplayPlayers(object sender, RoutedEventArgs e)
         {
             gridAdd.Visibility = Visibility.Hidden;
             gridList.Visibility = Visibility.Visible;
+            gridDelete.Visibility = Visibility.Hidden;
             lbList.Items.Clear();
 
             players.Sort((a, b) => a.Rank.CompareTo(b.Rank));
             DisplayTitle.Content = "Játékosok sorrendje";
-            
+
             foreach (var p in players)
             {
                 lbList.Items.Add(p.Rank + ": " + p.Name);
@@ -47,8 +50,16 @@ namespace PingPong
         {
             gridAdd.Visibility = Visibility.Visible;
             gridList.Visibility = Visibility.Hidden;
+            gridDelete.Visibility = Visibility.Hidden;
 
             DisplayTitle.Content = "Játékos felvétele";
+
+            btnSubmit.Click -= ChangePlayer;
+            btnSubmit.Click -= AddPlayer;
+            btnSubmit.Click += AddPlayer;
+
+            btnSubmit.Content = "Felvétel";
+
         }
 
         public void AddPlayer(object sender, RoutedEventArgs e)
@@ -56,15 +67,15 @@ namespace PingPong
 
             string errorMessage = "";
 
-            if (tbName.Text.Length == 0) 
+            if (tbName.Text.Length == 0)
             {
-                    errorMessage += "Adjon meg nevet! ";
+                errorMessage += "Adjon meg nevet! ";
             }
             if (int.Parse(tbSkill.Text) > 100 || int.Parse(tbSkill.Text) < 0)
             {
                 errorMessage += "Érvénytelen értékelés!";
             }
-            if(errorMessage == "")
+            if (errorMessage == "")
             {
                 Player player = new Player();
                 player.Name = tbName.Text;
@@ -74,9 +85,9 @@ namespace PingPong
 
                 bool changeNeeded = false;
 
-                foreach(var p in players)
+                foreach (var p in players)
                 {
-                    if(p.Rank == player.Rank)
+                    if (p.Rank == player.Rank)
                     {
                         changeNeeded = true;
                         break;
@@ -87,7 +98,7 @@ namespace PingPong
                 {
                     foreach (var p in players)
                     {
-                        if(p.Rank >= player.Rank)
+                        if (p.Rank >= player.Rank)
                         {
                             p.Rank++;
                         }
@@ -97,20 +108,184 @@ namespace PingPong
                 players.Add(player);
 
                 //lbErrorMessage.Content = "Sikeres játékosfelvétel!";
-                tbName.Text = "";
-                tbRank.Text = "";
-                tbSkill.Text = "";
-                tbDesc.Text = "";
             }
             else
             {
                 //lblErrorMessage.Content = errorMessage;
             }
+            tbName.Text = "";
+            tbRank.Text = "";
+            tbSkill.Text = "";
+            tbDesc.Text = "";
+
         }
+
+        void DisplayChangePlayer(object sender, RoutedEventArgs e)
+        {
+            gridAdd.Visibility = Visibility.Visible;
+            gridList.Visibility = Visibility.Hidden;
+            gridDelete.Visibility = Visibility.Hidden;
+
+            DisplayTitle.Content = "Játékos szerkesztése";
+
+            btnSubmit.Click -= ChangePlayer;
+            btnSubmit.Click -= AddPlayer;
+            btnSubmit.Click += ChangePlayer;
+
+            btnSubmit.Content = "Szerkesztés";
+
+        }
+
+        public void ChangePlayer(object sender, RoutedEventArgs e)
+        {
+            string errorMessage = "";
+
+            if (tbName.Text.Length == 0)
+            {
+                errorMessage += "Adjon meg nevet! ";
+            }
+            if (int.Parse(tbSkill.Text) > 100 || int.Parse(tbSkill.Text) < 0)
+            {
+                errorMessage += "Érvénytelen értékelés! ";
+            }
+
+            Player player = null;
+
+            foreach (var p in players)
+            {
+                if (p.Name == tbName.Text)
+                {
+                    player = p;
+                    break;
+                }
+            }
+
+            if (player == null)
+            {
+                errorMessage += "Nincs iyen nevű játékos!";
+            }
+
+            if (errorMessage == "")
+            {
+                int originalRank = player.Rank;
+                players.Remove(player);
+                player.Name = tbName.Text;
+                player.Rank = int.Parse(tbRank.Text);
+                player.SkillPoints = int.Parse(tbSkill.Text);
+                player.Description = tbDesc.Text;
+
+
+                bool changeNeeded = false;
+
+                foreach (var p in players)
+                {
+                    if (p.Rank == player.Rank)
+                    {
+                        changeNeeded = true;
+                        break;
+                    }
+                }
+
+                int l = 0;
+                int r = 0;
+
+                if (originalRank < player.Rank)
+                {
+                    l = originalRank;
+                    r = player.Rank;
+                }
+                else
+                {
+                    l = player.Rank;
+                    r = originalRank;
+                }
+
+                if (changeNeeded)
+                {
+                    foreach (var p in players)
+                    {
+                        if (p.Rank < r && p.Rank >= l)
+                        {
+                            p.Rank++;
+                        }
+                    }
+                }
+
+                players.Add(player);
+            }
+            else
+            {
+                //lblErrorMessage.Content = errorMessage;
+            }
+            tbName.Text = "";
+            tbRank.Text = "";
+            tbSkill.Text = "";
+            tbDesc.Text = "";
+        }
+
+
+
+        void DisplayDeletePlayer(object sender, RoutedEventArgs e)
+        {
+            gridAdd.Visibility = Visibility.Hidden;
+            gridList.Visibility = Visibility.Hidden;
+            gridDelete.Visibility = Visibility.Visible;
+
+            DisplayTitle.Content = "Játékos törlése";
+
+            btnDeleteSubmit.Click += DeletePlayer;
+
+            btnSubmit.Content = "Szerkesztés";
+
+        }
+
+        void DeletePlayer(object sender, RoutedEventArgs e)
+        {
+            string errorMessage = "";
+
+
+            Player player = null;
+
+            foreach (var p in players)
+            {
+                if (p.Name == tbDeleteName.Text)
+                {
+                    player = p;
+                    break;
+                }
+            }
+
+            if (player == null)
+            {
+                errorMessage += "Nincs iyen nevű játékos!";
+            }
+
+            if (errorMessage == "")
+            {
+
+                foreach (var p in players)
+                {
+                    if (p.Rank > player.Rank)
+                    {
+                        p.Rank--;
+                    }
+                }
+
+                players.Remove(player);
+            }
+            else
+            {
+                //lblErrorMessage.Content = errorMessage;
+            }
+            tbDeleteName.Text = "";
+        }
+
+
+
 
         public void ReadJSON(string file)
         {
-            using(StreamReader sr = new StreamReader(file))
+            using (StreamReader sr = new StreamReader(file))
             {
                 players = JsonConvert.DeserializeObject<List<Player>>(sr.ReadToEnd())!;
             }
