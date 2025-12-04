@@ -114,6 +114,10 @@ namespace PingPong
                 Player player = new Player();
                 player.Name = tbName.Text;
                 player.Rank = int.Parse(tbRank.Text);
+                if(player.Rank > players.Count+1)
+                {
+                    player.Rank = players.Count+1;
+                }
                 player.SkillPoints = int.Parse(tbSkill.Text);
                 player.Description = tbDesc.Text;
 
@@ -233,6 +237,10 @@ namespace PingPong
                 players.Remove(player);
                 player.Name = cbEditName.Text;
                 player.Rank = int.Parse(tbEditRank.Text);
+                if (player.Rank > players.Count + 1)
+                {
+                    player.Rank = players.Count + 1;
+                }
                 player.SkillPoints = int.Parse(tbEditSkill.Text);
                 player.Description = tbEditDesc.Text;
 
@@ -368,7 +376,7 @@ namespace PingPong
                 UpdateJSON("Datas.json");
                 ReadJSON("Datas.json");
                 
-                lblErrorMessage.Content = "";
+                lblErrorMessage.Content = "Sikeres törlés!";
             }
             else
             {
@@ -431,7 +439,7 @@ namespace PingPong
 
 
                 string message;
-                Player winner;
+                Player winner = null;
 
                 switch (checkedValue)
                 {
@@ -495,6 +503,59 @@ namespace PingPong
 
                         }
                         break;
+                }
+
+                if(player1.Name == winner.Name)
+                {
+                    if (player1.Rank != 1)
+                    {
+                        for (int i = 0; i < players.Count; i++)
+                        {
+                            var p = players[i];
+                            if (p.Name == winner.Name && winner.SkillPoints <= player2.SkillPoints)
+                            {
+                                players[i].SkillPoints += (player2.SkillPoints - winner.SkillPoints) / 10;
+
+                                players[i].Rank--;
+                                foreach (var pl in players)
+                                {
+                                    if (pl.Rank == winner.Rank && pl != winner)
+                                    {
+                                        pl.Rank++;
+                                        break;
+                                    }
+                                }
+                                break;
+
+                            }
+                        }
+                    }
+                }
+                else 
+                {
+                    if (player2.Rank != 1)
+                    {
+                        for (int i = 0; i < players.Count; i++)
+                        {
+                            var p = players[i];
+                            if (p.Name == winner.Name && winner.SkillPoints <= player1.SkillPoints)
+                            {
+                                players[i].SkillPoints += (player1.SkillPoints - winner.SkillPoints) / 10;
+
+                                players[i].Rank--;
+                                foreach (var pl in players)
+                                {
+                                    if (pl.Rank == winner.Rank - 1)
+                                    {
+                                        pl.Rank++;
+                                        break;
+                                    }
+                                }
+                                break;
+
+                            }
+                        }
+                    }
                 }
 
             }
