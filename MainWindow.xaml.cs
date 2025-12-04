@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.IO;
+using System.Numerics;
 using System.Text;
 using System.Text.Json;
 using System.Windows;
@@ -28,13 +29,18 @@ namespace PingPong
             AddPlayers.Click += DisplayAddPlayer;
             EditPlayers.Click += DisplayChangePlayer;
             DeletePlayers.Click += DisplayDeletePlayer;
-
+            AddMatch.Click += DisplayPlanGame;
+            DisplayTitle.Content = "";
         }
 
         public void DisplayPlayers(object sender, RoutedEventArgs e)
         {
             gridAdd.Visibility = Visibility.Hidden;
+            gridEdit.Visibility = Visibility.Hidden;
+
             gridList.Visibility = Visibility.Visible;
+            gridPlan.Visibility = Visibility.Hidden;
+
             gridDelete.Visibility = Visibility.Hidden;
             lbList.Items.Clear();
 
@@ -45,21 +51,27 @@ namespace PingPong
             {
                 lbList.Items.Add(p.Rank + ": " + p.Name);
             }
+
+            lblErrorMessage.Content = "";
         }
 
         void DisplayAddPlayer(object sender, RoutedEventArgs e)
         {
+            gridEdit.Visibility = Visibility.Hidden;
             gridAdd.Visibility = Visibility.Visible;
             gridList.Visibility = Visibility.Hidden;
             gridDelete.Visibility = Visibility.Hidden;
+            gridPlan.Visibility = Visibility.Hidden;
+
 
             DisplayTitle.Content = "Játékos felvétele";
 
-            btnSubmit.Click -= ChangePlayer;
-            btnSubmit.Click -= AddPlayer;
             btnSubmit.Click += AddPlayer;
 
             btnSubmit.Content = "Felvétel";
+
+            lblErrorMessage.Content = "";
+
 
         }
 
@@ -68,13 +80,34 @@ namespace PingPong
 
             string errorMessage = "";
 
-            if (tbName.Text.Length == 0)
+            if (tbName.Text == "")
             {
                 errorMessage += "Adjon meg nevet! ";
             }
-            if (int.Parse(tbSkill.Text) > 100 || int.Parse(tbSkill.Text) < 0)
+            if (tbSkill.Text != "" && int.TryParse(tbSkill.Text, out int skill))
             {
-                errorMessage += "Érvénytelen értékelés!";
+                if (skill > 100 || skill < 0)
+                {
+                    errorMessage += "Érvénytelen értékelés!";
+                }
+            }
+            else if (tbSkill.Text == "")
+            {
+                errorMessage += "Érvénytelen értékelés! ";
+
+            }
+
+            if ((tbRank.Text != "" && int.TryParse(tbRank.Text, out int rank)) )
+            {
+                if (rank <= 0)
+                {
+                    errorMessage += "Érvénytelen rank!";
+                }
+            }
+            else if (tbRank.Text == "")
+            {
+                errorMessage += "Érvénytelen rank!";
+
             }
             if (errorMessage == "")
             {
@@ -111,72 +144,97 @@ namespace PingPong
                 UpdateJSON("Datas.json");
                 ReadJSON("Datas.json");
 
-                //lbErrorMessage.Content = "Sikeres játékosfelvétel!";
+                lblErrorMessage.Content = "Sikeres játékosfelvétel!";
             }
             else
             {
-                //lblErrorMessage.Content = errorMessage;
+                lblErrorMessage.Content = errorMessage;
             }
             tbName.Text = "";
             tbRank.Text = "";
             tbSkill.Text = "";
             tbDesc.Text = "";
 
+            
         }
 
         void DisplayChangePlayer(object sender, RoutedEventArgs e)
         {
-            gridAdd.Visibility = Visibility.Visible;
+            gridEdit.Visibility = Visibility.Visible;
+            gridAdd.Visibility = Visibility.Hidden;
             gridList.Visibility = Visibility.Hidden;
             gridDelete.Visibility = Visibility.Hidden;
+            gridPlan.Visibility = Visibility.Hidden;
+
 
             DisplayTitle.Content = "Játékos szerkesztése";
 
-            btnSubmit.Click -= ChangePlayer;
-            btnSubmit.Click -= AddPlayer;
-            btnSubmit.Click += ChangePlayer;
+            btnEditSubmit.Click += ChangePlayer;
 
-            btnSubmit.Content = "Szerkesztés";
+            cbEditName.Items.Clear();
+
+            foreach (var player in players)
+            {
+                cbEditName.Items.Add(player.Name);
+            }
+
+            lblErrorMessage.Content = "";
+
 
         }
 
         public void ChangePlayer(object sender, RoutedEventArgs e)
         {
-            string errorMessage = "";
-
-            if (tbName.Text.Length == 0)
+            lblErrorMessage.Content = "";
+            if (string.IsNullOrWhiteSpace(cbEditName.Text))
             {
-                errorMessage += "Adjon meg nevet! ";
-            }
-            if (int.Parse(tbSkill.Text) > 100 || int.Parse(tbSkill.Text) < 0)
-            {
-                errorMessage += "Érvénytelen értékelés! ";
+                lblErrorMessage.Content = "Válasszon játékost!";
+                return;
             }
 
-            Player player = null;
-
-            foreach (var p in players)
-            {
-                if (p.Name == tbName.Text)
-                {
-                    player = p;
-                    break;
-                }
-            }
-
+            Player player = players.FirstOrDefault(p => p.Name == cbEditName.Text);
             if (player == null)
             {
-                errorMessage += "Nincs iyen nevű játékos!";
+                lblErrorMessage.Content = "Játékos nem található!";
+                return;
             }
 
+            
+            string errorMessage = "";
+
+            if (tbEditSkill.Text != "" && int.TryParse(tbEditSkill.Text, out int skill))
+            {
+                if (skill > 100 || skill < 0)
+                {
+                    errorMessage += "Érvénytelen értékelés!";
+                }
+            }
+            else if (tbEditSkill.Text == "")
+            {
+                errorMessage += "Érvénytelen értékelés! ";
+
+            }
+
+            if (tbEditRank.Text != "" && int.TryParse(tbEditRank.Text, out int rank))
+            {
+                if (rank <= 0)
+                {
+                    errorMessage += "Érvénytelen rank!";
+                }
+            }
+            else if (tbEditRank.Text == "")
+            {
+                errorMessage += "Érvénytelen rank! ";
+
+            }
             if (errorMessage == "")
             {
                 int originalRank = player.Rank;
                 players.Remove(player);
-                player.Name = tbName.Text;
-                player.Rank = int.Parse(tbRank.Text);
-                player.SkillPoints = int.Parse(tbSkill.Text);
-                player.Description = tbDesc.Text;
+                player.Name = cbEditName.Text;
+                player.Rank = int.Parse(tbEditRank.Text);
+                player.SkillPoints = int.Parse(tbEditSkill.Text);
+                player.Description = tbEditDesc.Text;
 
 
                 bool changeNeeded = false;
@@ -206,11 +264,25 @@ namespace PingPong
 
                 if (changeNeeded)
                 {
-                    foreach (var p in players)
+                    if (l == player.Rank)
                     {
-                        if (p.Rank < r && p.Rank >= l)
+
+                        foreach (var p in players)
                         {
-                            p.Rank++;
+                            if (p.Rank < r && p.Rank >= l)
+                            {
+                                p.Rank++;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        foreach (var p in players)
+                        {
+                            if (p.Rank <= r && p.Rank > l)
+                            {
+                                p.Rank--;
+                            }
                         }
                     }
                 }
@@ -222,12 +294,12 @@ namespace PingPong
             }
             else
             {
-                //lblErrorMessage.Content = errorMessage;
+                lblErrorMessage.Content = errorMessage;
             }
-            tbName.Text = "";
-            tbRank.Text = "";
-            tbSkill.Text = "";
-            tbDesc.Text = "";
+            cbEditName.Text = "";
+            tbEditRank.Text = "";
+            tbEditSkill.Text = "";
+            tbEditDesc.Text = "";
         }
 
 
@@ -236,13 +308,25 @@ namespace PingPong
         {
             gridAdd.Visibility = Visibility.Hidden;
             gridList.Visibility = Visibility.Hidden;
+            gridPlan.Visibility = Visibility.Hidden;
             gridDelete.Visibility = Visibility.Visible;
+            gridEdit.Visibility = Visibility.Hidden;
+
 
             DisplayTitle.Content = "Játékos törlése";
 
             btnDeleteSubmit.Click += DeletePlayer;
 
-            btnSubmit.Content = "Szerkesztés";
+            cbDeleteName.Items.Clear();
+
+            foreach (var p in players)
+            {
+                cbDeleteName.Items.Add(p.Name);
+            }
+
+            lblErrorMessage.Content = "";
+
+            cbDeleteName.Text = "Válassz...";
 
         }
 
@@ -255,7 +339,7 @@ namespace PingPong
 
             foreach (var p in players)
             {
-                if (p.Name == tbDeleteName.Text)
+                if (p.Name == cbDeleteName.Text)
                 {
                     player = p;
                     break;
@@ -270,6 +354,7 @@ namespace PingPong
             if (errorMessage == "")
             {
 
+
                 foreach (var p in players)
                 {
                     if (p.Rank > player.Rank)
@@ -282,16 +367,186 @@ namespace PingPong
 
                 UpdateJSON("Datas.json");
                 ReadJSON("Datas.json");
+                
+                lblErrorMessage.Content = "";
             }
             else
             {
-                //lblErrorMessage.Content = errorMessage;
+                lblErrorMessage.Content = errorMessage;
             }
-            tbDeleteName.Text = "";
+            cbDeleteName.Text = "";
         }
 
 
+        void DisplayPlanGame(object sender, RoutedEventArgs e)
+        {
+            gridPlan.Visibility = Visibility.Visible;
+            gridAdd.Visibility = Visibility.Hidden;
+            gridList.Visibility = Visibility.Hidden;
+            gridEdit.Visibility = Visibility.Hidden;
 
+            gridDelete.Visibility = Visibility.Hidden;
+
+            DisplayTitle.Content = "Meccs tervezése";
+
+            btnPlanMatch.Click += PlanGame;
+
+            lblErrorMessage.Content = "";
+
+            cbPlayer1.Items.Clear();
+            cbPlayer2.Items.Clear();
+
+            foreach (var p in players)
+            {
+                cbPlayer1.Items.Add(p.Name);
+                cbPlayer2.Items.Add(p.Name);
+            }
+
+            cbPlayer1.Text = "Válassz...";
+            cbPlayer2.Text = "Válassz...";
+
+
+        }
+
+        void PlanGame(object sender, RoutedEventArgs e)
+        {
+            string errorMessage = "";
+            Player player1 = null;
+            Player player2 = null;
+
+            foreach (var p in players)
+            {
+                if (p.Name == cbPlayer1.Text) player1 = p;
+                if (p.Name == cbPlayer2.Text) player2 = p;
+            }
+
+            if (player1 == null || player2 == null)
+            {
+                errorMessage += "Nincsen kiválasztva játékos!";
+            } 
+
+            if (errorMessage == "")
+            {
+                var checkedValue = spRadios.Children.OfType<RadioButton>().FirstOrDefault(r => r.IsChecked.HasValue && r.IsChecked.Value).Content;
+
+
+                string message;
+                Player winner;
+
+                switch (checkedValue)
+                {
+                    case "1":
+                        var result = SimulateGame(player1, player2);
+                        message = result.Item1;
+                        winner = result.Item2;
+                        MessageBox.Show(message, "Meccs eredménye");
+                        break;
+                    case "3":
+                        int win1 = 0;
+                        int win2 = 0;
+                        while (true)
+                        {
+                            if (win1 > win2 && win1 == 2)
+                            {
+                                MessageBox.Show($"{player1.Name} nyerte a teljes mérkőzést.");
+                                break;
+                            }
+                            if (win2 > win1 && win2 == 2)
+                            {
+                                MessageBox.Show($"{player2.Name} nyerte a teljes mérkőzést.");
+                                break;
+                            }
+
+                            result = SimulateGame(player1, player2);
+                            message = result.Item1;
+                            winner = result.Item2;
+                            MessageBox.Show(message, "Meccs eredménye");
+
+
+                            if (winner.Name == player1.Name) win1++;
+                            else if (winner.Name == player2.Name) win2++;
+
+                        }
+                        break;
+                    case "5":
+                        win1 = 0;
+                        win2 = 0;
+                        while (true)
+                        {
+                            if (win1 > win2 && win1 == 3)
+                            {
+                                MessageBox.Show($"{player1.Name} nyerte a teljes mérkőzést.");
+                                break;
+                            }
+                            if (win2 > win1 && win2 == 3)
+                            {
+                                MessageBox.Show($"{player2.Name} nyerte a teljes mérkőzést.");
+                                break;
+                            }
+
+                            result = SimulateGame(player1, player2);
+                            message = result.Item1;
+                            winner = result.Item2;
+                            MessageBox.Show(message, "Meccs eredménye");
+
+
+                            if (winner.Name == player1.Name) win1++;
+                            else if (winner.Name == player2.Name) win2++;
+
+                        }
+                        break;
+                }
+
+            }
+        }
+
+
+        public (string, Player) SimulateGame(Player p1, Player p2)
+        {
+            Random random = new Random();
+
+            int p1Points = 0;
+            int p2Points = 0;
+
+            double chance = (double)p1.SkillPoints / (p1.SkillPoints + p2.SkillPoints);
+
+            StringBuilder log = new StringBuilder();
+            log.AppendLine($"{p1.Name} ({p1.SkillPoints}) vs {p2.Name} ({p2.SkillPoints})");
+            log.AppendLine("--------------------------------------------------");
+
+            while (true)
+            {
+                double roll = random.NextDouble();
+                
+                if (roll < chance)
+                {
+                    p1Points++;
+                    log.AppendLine($"{p1.Name} szerzi a pontot! {p1Points} - {p2Points}");
+                }
+                else
+                {
+                    p2Points++;
+                    log.AppendLine($"{p2.Name} szerzi a pontot! {p1Points} - {p2Points}");
+                }
+
+                if (p1Points >= 11 && (p1Points - p2Points) >=2 )
+                {
+                    log.AppendLine("--------------------------------------------------");
+
+                    log.AppendLine($"{p1.Name} megnyerte a szettet!");
+                    return (log.ToString(),p1);
+                }
+                if (p2Points >= 11 && (p2Points - p1Points) >= 2)
+                {
+                    log.AppendLine("--------------------------------------------------");
+
+                    log.AppendLine($"{p2.Name} megnyerte a szettet!");
+                    return (log.ToString(), p2);
+                }
+            }
+
+
+        }
 
         public void ReadJSON(string file)
         {
@@ -321,6 +576,31 @@ namespace PingPong
             newJson.AppendLine("]");
 
             File.WriteAllText(file, newJson.ToString(), new UTF8Encoding(false));
+        }
+
+        private void cbEditName_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            
+
+        }
+
+        private void LoadEditData(object sender, EventArgs e)
+        {
+            Player player = null;
+            foreach (var p in players)
+            {
+                if (p.Name == cbEditName.Text)
+                {
+                    player = p;
+                    break;
+                }
+            }
+            if (player != null)
+            { 
+                tbEditRank.Text = player.Rank.ToString();
+                tbEditSkill.Text = player.SkillPoints.ToString();
+                tbEditDesc.Text = player.Description;
+            }
         }
     }
 }

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PingPong"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" FontFamily="Arial" FontSize="20">
+        Title="MainWindow" Height="500" Width="800" FontFamily="Arial" FontSize="20">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="3*" />
@@ -75,14 +75,40 @@
 
                     </StackPanel>
                 </Grid>
-                <Grid x:Name="gridDelete" Visibility="Hidden" Grid.Row="1" HorizontalAlignment="Center">
+                <Grid x:Name="gridEdit" Visibility="Hidden" Grid.Row="1" HorizontalAlignment="Center">
                     <Grid.RowDefinitions>
                         <RowDefinition></RowDefinition>
                     </Grid.RowDefinitions>
                     <StackPanel Grid.Row="0" Margin="10 10 10 10">
                         <StackPanel Orientation="Horizontal" Margin="0 5 0 5">
                             <Label Content="Név:" Width="100" VerticalAlignment="Center"/>
-                            <TextBox x:Name="tbDeleteName" Width="200"/>
+                            <ComboBox x:Name="cbEditName" Width="200" DropDownClosed="LoadEditData"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0 5 0 5">
+                            <Label Content="Rank:" Width="100" VerticalAlignment="Center"/>
+                            <TextBox x:Name="tbEditRank" Width="200"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0 5 0 5" >
+                            <Label Content="Értékelés:" Width="100" VerticalAlignment="Center"/>
+                            <TextBox x:Name="tbEditSkill" Width="200"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0 5 0 5" >
+                            <Label Content="Leírás:" Width="100" VerticalAlignment="Center"/>
+                            <TextBox x:Name="tbEditDesc" Width="200"/>
+                        </StackPanel>
+
+                        <Button x:Name="btnEditSubmit" Content="Hozzáadás" Width="150" Margin="0 10 0 0" HorizontalAlignment="Center" Background="LightBlue" BorderBrush="DarkSlateGray" BorderThickness="2"/>
+
+                    </StackPanel>
+                </Grid>
+                <Grid x:Name="gridDelete" Visibility="Hidden" Grid.Row="1" HorizontalAlignment="Center">
+                    <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <StackPanel Grid.Row="0" Margin="10 10 10 10">
+                        <StackPanel Orientation="Horizontal" Margin="0 5 0 5">
+                            <Label Content="Név:" Width="100" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                            <ComboBox x:Name="cbDeleteName" Width="200"/>
                         </StackPanel>
 
                         <Button x:Name="btnDeleteSubmit" Content="Törlés" Width="150" Margin="0 10 0 0" HorizontalAlignment="Center" Background="LightBlue" BorderBrush="DarkSlateGray" BorderThickness="2"/>
@@ -103,14 +129,14 @@
                     <Label Grid.Row="1" Content="VS" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" FontSize="25"/>
                     <ComboBox x:Name="cbPlayer2" Width="200" Margin="0 10 0 10" Grid.Row="2" Height="40" />
                     <Label Grid.Row="3" Content="Best Of" HorizontalAlignment="Center" VerticalAlignment="Center"  Margin="0 0 0 10"/>
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="4">
+                    <StackPanel x:Name="spRadios" Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="4">
                         <RadioButton x:Name="rbBestOf1" Content="1" GroupName="BestOf" IsChecked="True" HorizontalAlignment="Center" Margin="0 0 0 5"/>
                         <RadioButton x:Name="rbBestOf3" Content="3" GroupName="BestOf" IsChecked="True" HorizontalAlignment="Center" Margin="0 0 0 5"/>
                         <RadioButton x:Name="rbBestOf5" Content="5" GroupName="BestOf" HorizontalAlignment="Center" Margin="0 0 0 10"/>
                     </StackPanel>
                     <Button x:Name="btnPlanMatch" Content="Meccs tervezése" Width="175" Margin="0 0 0 0" Grid.Row="5" Height="40" HorizontalAlignment="Center" VerticalAlignment="Top" Background="LightBlue" BorderBrush="DarkSlateGray" BorderThickness="2"/>
-
                 </Grid>
+                <Label Name="lblErrorMessage" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Top" Foreground="Red"></Label>
             </Grid>
         </Border>
 
